@@ -14,11 +14,14 @@
   boot.specialFileSystems = lib.mkForce {};
   networking.hostName = "";
 
-  services.journald.console = "/dev/console";
-
   systemd.services.systemd-logind.enable = false;
   systemd.services.console-getty.enable = false;
 
   systemd.sockets.nix-daemon.enable = lib.mkDefault false;
   systemd.services.nix-daemon.enable = lib.mkDefault false;
+
+  services.journald.settings.Journal = {
+    ForwardToConsole = true;
+    TTYPath = "/dev/console";
+  };
 }
